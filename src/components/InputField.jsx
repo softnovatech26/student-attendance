@@ -10,7 +10,7 @@ export default function InputField({label, name, type="text"}) {
       <input
         type={type}
         name={name}
-        className="w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className=" text-black w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder={`Enter ${label}`}
       />
 
