@@ -83,23 +83,25 @@ export default function AttendanceForm() {
   };
 
   // ===== Submit hone par backend ko data bhejo =====
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5000/api/attendance/submit", {
-  fullName: formData.fullName,
-  studentId: formData.studentId,
-  teacherName: formData.teacherName,
-  courseName: formData.courseName,
-  date: formData.date,
-});
-      console.log(response.data);
-      alert("Attendance submited!");
-    } catch (error) {
-      console.error(error);
-      alert("Error!");
-    }
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post("http://localhost:5000/api/attendance/submit", {
+      fullName: formData.fullName,
+      studentId: formData.studentId,
+      teacherName: formData.teacherName,
+      courseName: formData.courseName,
+      date: formData.date,
+    });
+    console.log(response.data);
+    alert("✅ Attendance Submited");
+    setFormData({ fullName: "", studentId: "", teacherName: "", courseName: "", date: "" }); // form clear
+  } catch (error) {
+    console.error("Submit error:", error);
+    const errMsg = error.response?.data?.message || error.message || "Something is wrong";
+    alert(`❌ Error: ${errMsg}`);
+  }
+};
 
   return (
     <div className="max-w-xl mx-auto mt-10 bg-[#0a0a0a] p-8 rounded-2xl border border-white/5 shadow-2xl text-white">
@@ -117,46 +119,17 @@ export default function AttendanceForm() {
 
       {/* ===== Form tag add kiya taake onSubmit kaam kare ===== */}
       <form onSubmit={handleSubmit} className="space-y-5">
-        <InputField 
-          label="Student Full Name"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-        />
+        <InputField label="Student Full Name" name="fullName" value={formData.fullName} onChange={handleChange} />
 
-        <InputField 
-          label="Student ID"
-          name="studentId"
-          value={formData.studentId}
-          onChange={handleChange}
-        />
+        <InputField label="Student ID" name="studentId" value={formData.studentId} onChange={handleChange} />
 
-        <InputField 
-          label="Teacher Name"
-          name="teacherName"
-          value={formData.teacherName}
-          onChange={handleChange}
-        />
+        <InputField label="Teacher Name" name="teacherName" value={formData.teacherName} onChange={handleChange} />
 
-        <InputField 
-          label="Course Name"
-          name="courseName"
-          value={formData.courseName}
-          onChange={handleChange}
-        />
+        <InputField label="Course Name" name="courseName" value={formData.courseName} onChange={handleChange} />
 
-        <InputField 
-          label="Date"
-          name="date"
-          type="date"
-          value={formData.date}
-          onChange={handleChange}
-        />
+        <InputField label="Date" name="date" type="date" value={formData.date} onChange={handleChange} />
 
-        <button
-          type="submit"
-          className="w-full mt-4 bg-[#FF4C4C] text-white py-3 rounded-xl font-semibold tracking-wide transition-all duration-200 hover:bg-[#E03A3A] hover:shadow-[0_0_20px_rgba(255,76,76,0.3)] active:scale-[0.99]"
-        >
+        <button type="submit" className="w-full mt-4 bg-[#FF4C4C] text-white py-3 rounded-xl font-semibold tracking-wide transition-all duration-200 hover:bg-[#E03A3A] hover:shadow-[0_0_20px_rgba(255,76,76,0.3)] active:scale-[0.99]" >
           Submit Attendance
         </button>
       </form>
