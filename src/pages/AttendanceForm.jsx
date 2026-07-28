@@ -1,74 +1,9 @@
-// import InputField from "../components/InputField";
-
-// export default function AttendanceForm(){
-//   return (
-//     <div className="max-w-xl mx-auto mt-10 bg-[#0a0a0a] p-8 rounded-2xl border border-white/5 shadow-2xl text-white">
-      
-//       {/* Small Badge element matching the "New cohort" tag */}
-//       <div className="flex justify-center mb-3">
-//         <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[#FF4C4C] bg-[#FF4C4C]/10 rounded-full border border--[#FF4C4C]/20">
-//           <span className="w-1.5 h-1.5 rounded-full bg-[#FF4C4C] animate-pulse"></span>
-//           SoftNova Portal
-//         </span>
-//       </div>
-
-//       <h2 className="text-3xl font-bold text-center mb-8 tracking-tight">
-//         Student Attendance <span className="text-[#FF4C4C]">Form</span>
-//       </h2>
-
-//       {/* Form Fields Stack */}
-//       <div className="space-y-5">
-//         <InputField 
-//           label="Student Full Name"
-//           name="fullName"
-//         />
-
-//         <InputField 
-//           label="Student ID"
-//           name="studentId"
-//         />
-
-//         <InputField 
-//           label="Teacher Name"
-//           name="teacherName"
-//         />
-
-//         <InputField 
-//           label="Course Name"
-//           name="courseName"
-//         />
-
-//         <InputField 
-//           label="Date"
-//           name="date"
-//           type="date"
-//         />
-
-//         {/* Themed Submit Button */}
-//         <button
-//           className="w-full mt-4 bg-[#FF4C4C] text-white py-3 rounded-xl font-semibold tracking-wide transition-all duration-200 hover:bg-[#E03A3A] hover:shadow-[0_0_20px_rgba(255,76,76,0.3)] active:scale-[0.99]"
-//         >
-//           Submit Attendance
-//         </button>
-//       </div>
-
-//     </div>
-//   )
-// }
-
-
-
-
-
-
-
-
 import { useState } from "react";
 import axios from "axios";
 import InputField from "../components/InputField";
 
 export default function AttendanceForm() {
-  // ===== State: har field ki value yahan save hogi =====
+
   const [formData, setFormData] = useState({
     fullName: "",
     studentId: "",
@@ -77,63 +12,214 @@ export default function AttendanceForm() {
     date: "",
   });
 
-  // ===== Jab bhi koi input change ho, state update ho =====
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // ===== Submit hone par backend ko data bhejo =====
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post("http://localhost:5000/api/attendance/submit", {
-      fullName: formData.fullName,
-      studentId: formData.studentId,
-      teacherName: formData.teacherName,
-      courseName: formData.courseName,
-      date: formData.date,
-    });
-    console.log(response.data);
-    alert("✅ Attendance Submited");
-    setFormData({ fullName: "", studentId: "", teacherName: "", courseName: "", date: "" }); // form clear
-  } catch (error) {
-    console.error("Submit error:", error);
-    const errMsg = error.response?.data?.message || error.message || "Something is wrong";
-    alert(`❌ Error: ${errMsg}`);
-  }
-};
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/attendance/submit",
+        {
+          fullName: formData.fullName,
+          studentId: formData.studentId,
+          teacherName: formData.teacherName,
+          courseName: formData.courseName,
+          date: formData.date,
+        }
+      );
+
+      console.log(response.data);
+
+      alert("✅ Attendance Submitted");
+
+      setFormData({
+        fullName: "",
+        studentId: "",
+        teacherName: "",
+        courseName: "",
+        date: "",
+      });
+
+    } catch (error) {
+
+      console.error("Submit error:", error);
+
+      const errMsg =
+        error.response?.data?.message ||
+        error.message ||
+        "Something is wrong";
+
+      alert(`❌ Error: ${errMsg}`);
+    }
+  };
+
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-[#0a0a0a] p-8 rounded-2xl border border-white/5 shadow-2xl text-white">
-      
-      <div className="flex justify-center mb-3">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[#FF4C4C] bg-[#FF4C4C]/10 rounded-full border border--[#FF4C4C]/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF4C4C] animate-pulse"></span>
-          SoftNova Portal
+
+    <div className="
+      w-full
+      text-white
+      animate-fadeIn
+    ">
+
+
+      {/* Badge */}
+      <div className="flex justify-center mb-5">
+
+        <span className="
+          flex items-center gap-2
+          px-4 py-1.5
+          rounded-full
+          text-xs
+          font-semibold
+          tracking-wide
+          text-red-400
+          bg-red-500/10
+          border
+          border-red-500/20
+        ">
+
+          <span className="
+            w-2
+            h-2
+            bg-red-500
+            rounded-full
+            animate-pulse
+          "></span>
+
+          SoftNova Attendance Portal
+
         </span>
+
       </div>
 
-      <h2 className="text-3xl font-bold text-center mb-8 tracking-tight">
-        Student Attendance <span className="text-[#FF4C4C]">Form</span>
-      </h2>
 
-      {/* ===== Form tag add kiya taake onSubmit kaam kare ===== */}
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <InputField label="Student Full Name" name="fullName" value={formData.fullName} onChange={handleChange} />
 
-        <InputField label="Student ID" name="studentId" value={formData.studentId} onChange={handleChange} />
+      {/* Heading */}
+      <div className="text-center mb-8">
 
-        <InputField label="Teacher Name" name="teacherName" value={formData.teacherName} onChange={handleChange} />
+        <h2 className="
+          text-3xl
+          md:text-4xl
+          font-bold
+          tracking-tight
+        ">
 
-        <InputField label="Course Name" name="courseName" value={formData.courseName} onChange={handleChange} />
+          Student Attendance
 
-        <InputField label="Date" name="date" type="date" value={formData.date} onChange={handleChange} />
+          <span className="text-red-500">
+            {" "}Form
+          </span>
 
-        <button type="submit" className="w-full mt-4 bg-[#FF4C4C] text-white py-3 rounded-xl font-semibold tracking-wide transition-all duration-200 hover:bg-[#E03A3A] hover:shadow-[0_0_20px_rgba(255,76,76,0.3)] active:scale-[0.99]" >
-          Submit Attendance
+        </h2>
+
+
+        <p className="
+          text-gray-400
+          text-sm
+          mt-3
+        ">
+          Submit daily student attendance records securely
+        </p>
+
+
+      </div>
+
+
+
+      <form 
+        onSubmit={handleSubmit}
+        className="space-y-6"
+      >
+
+
+        <InputField
+          label="Student Full Name"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+        />
+
+
+        <InputField
+          label="Student ID"
+          name="studentId"
+          value={formData.studentId}
+          onChange={handleChange}
+        />
+
+
+        <InputField
+          label="Teacher Name"
+          name="teacherName"
+          value={formData.teacherName}
+          onChange={handleChange}
+        />
+
+
+        <InputField
+          label="Course Name"
+          name="courseName"
+          value={formData.courseName}
+          onChange={handleChange}
+        />
+
+
+        <InputField
+          label="Attendance Date"
+          name="date"
+          type="date"
+          value={formData.date}
+          onChange={handleChange}
+        />
+
+
+
+        <button
+          type="submit"
+          className="
+            group
+            relative
+            w-full
+            mt-5
+            py-3.5
+            rounded-xl
+            font-semibold
+            tracking-wide
+            overflow-hidden
+            bg-gradient-to-r
+            from-red-500
+            to-orange-500
+            hover:shadow-[0_0_30px_rgba(255,76,76,0.4)]
+            transition-all
+            duration-300
+            active:scale-95
+          "
+        >
+
+          <span className="
+            relative
+            z-10
+          ">
+            Submit Attendance
+          </span>
+
+
         </button>
+
+
       </form>
 
+
     </div>
+
   );
 }
