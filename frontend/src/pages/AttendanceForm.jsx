@@ -71,7 +71,7 @@ export default function AttendanceForm() {
     ">
 
 
-      {/* Badge */}
+      {/* Badges */}
       <div className="flex justify-center mb-5">
 
         <span className="
