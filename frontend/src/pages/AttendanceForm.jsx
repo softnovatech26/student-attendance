@@ -165,14 +165,55 @@ export default function AttendanceForm() {
         />
 
 
-        <InputField
-          label="Course Name"
-          name="courseName"
-          value={formData.courseName}
-          onChange={handleChange}
-        />
+        
+  <select
+  name="courseName"
+  value={formData.courseName}
+  onChange={handleChange}
+  required
+  className="
+    w-full
+    px-5
+    py-4
+    rounded-2xl
+    bg-white/10
+    border
+    border-white/20
+    text-white
+    outline-none
+    focus:border-red-500
+    focus:ring-2
+    focus:ring-red-500/20
+  "
+>
+  <option value="" className="text-gray-500 bg-white">
+  Select Course
+</option>
 
+<option value="Complete HTML CSS and JavaScript" className="text-black bg-white">
+  Complete HTML CSS and JavaScript
+</option>
 
+<option value="Python for Data Science" className="text-black bg-white">
+  Python for Data Science
+</option>
+
+<option value="React.js Development" className="text-black bg-white">
+  React.js Development
+</option>
+
+<option value="Tailwind CSS Development" className="text-black bg-white">
+  Tailwind CSS Development
+</option>
+
+<option value="Artificial Intelligence" className="text-black bg-white">
+  Artificial Intelligence
+</option>
+
+<option value="React Native App Development" className="text-black bg-white">
+  React Native App Development
+</option>
+</select>
         <InputField
           label="Attendance Date"
           name="date"
