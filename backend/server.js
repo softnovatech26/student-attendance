@@ -47,6 +47,6 @@ app.use((err, req, res, next) => {
 });
 
 // ===== Server Start =====
-app.listen(PORT, () => {
-  console.log(`✅ Server chal raha hai: http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
